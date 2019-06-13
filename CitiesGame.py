@@ -37,7 +37,7 @@ while cont:
     else:
         personCity = input(phrases[random.randint(1,len(phrases)-1)]+ "\n").lower()
 
-    if personCity == "я устал, я ухожу":
+    if personCity == "я устал, я ухожу" or personCity == "q":
         print ("Ну и ладно, больно надо..." if kol <= 10 else "неплохо сыграли, возвращайся еще!")
         cont = False
 
