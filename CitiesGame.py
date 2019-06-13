@@ -4,6 +4,7 @@ citiesF = open("cities.txt", "r",encoding="utf8",)
 cities = list(map(lambda s: s.strip(), citiesF.readlines()))
 
 usedCities = []
+currentCity = ""
 
 def botAnswer(personCity):
     otst = -1
@@ -25,8 +26,8 @@ print ('''Сыграем в города?
 phrases = ["Ты начинаешь","Ходи","Твой ход"]
 falsePhrases = ["Точно без ошибок написано? Не засчитываю","Не знаю о таком","Мимо!"]
 usedPhrases = ["Повторяешься!","Было!"]
+
 cont = True
-currentCity = ""
 
 kol = 1
 
@@ -59,3 +60,8 @@ while cont:
 
 
 citiesF.close()
+
+# Пофиксить:
+# 1) проверка ввода первой буквы у пользователя
+# 2) говорить, когда город повторяется (done)
+# 3) и если городов на "Ы" больше нет - говорить, что используем предыдущую букву
