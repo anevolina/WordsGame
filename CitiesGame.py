@@ -1,6 +1,6 @@
 import random
 
-citiesF = open("cities.txt", "r",encoding="utf8",)
+citiesF = open("cities.txt", "r", encoding = "utf8")
 cities = list(map(lambda s: s.strip(), citiesF.readlines()))
 
 usedCities = []
@@ -23,9 +23,9 @@ print ('''Сыграем в города?
         Только русские города, патриот ты или как?
 ''')
 
-phrases = ["Ты начинаешь","Ходи","Твой ход"]
-falsePhrases = ["Точно без ошибок написано? Не засчитываю","Не знаю о таком","Мимо!"]
-usedPhrases = ["Повторяешься!","Было!"]
+phrases = ["Ты начинаешь", "Ходи", "Твой ход"]
+falsePhrases = ["Точно без ошибок написано? Не засчитываю", "Не знаю о таком", "Мимо!"]
+usedPhrases = ["Повторяешься!", "Было!"]
 
 cont = True
 
@@ -52,10 +52,10 @@ while cont:
         continue
 
     elif personCity.title() in usedCities:
-        print (usedPhrases[random.randint(0,len(usedPhrases)-1)]+" ")
+        print (usedPhrases[random.randint(0, len(usedPhrases)-1)]+" ")
         continue
     else:
-        print (falsePhrases[random.randint(0,len(falsePhrases)-1)]+" ")
+        print (falsePhrases[random.randint(0, len(falsePhrases)-1)]+" ")
         continue
 
 
@@ -68,3 +68,7 @@ citiesF.close()
 # 4) проверять на пустой ввод (показывать спец. сообщение) и strip-пать (убирать пробелы перед и после)
 # 5) назвать переменные чуть осмысленнее и без транслитерации: cont, kol, otst
 # 6) рандномизировать ответы бота
+# 7) впилить его в телеграм-бот
+# 8) сделать возможность выбора категорий слов
+# 9) перевод на английский язык
+
