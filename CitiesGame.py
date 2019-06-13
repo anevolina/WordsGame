@@ -4,71 +4,104 @@ citiesF = open("cities.txt", "r", encoding = "utf8")
 cities = list(map(lambda s: s.strip(), citiesF.readlines()))
 
 usedCities = []
-currentCity = ""
+currentCity = [" ", -1]
+usedLetters = ["ь", "ъ"]
+
+startPhrases = ["Ты начинаешь", "Начинай", "Настарт-внимание-маррррррш!!"]
+currentPhrases = ["Ты начинаешь", "Ходи", "Твой ход"]
+falsePhrases = ["Точно без ошибок написано? Не засчитываю", "Не знаю о таком", "Мимо!", "Только русские города, помнишь?"]
+exitPhrases = ["я устал, я ухожу", "я устал", "отстань", "уйди противный", "отвали", "задолбал", "бесишь", "q", "Q", "отвянь"]
+usedPhrases = ["Повторяешься!", "Было!"]
+botPhrases = ["окей, мой тебе ответ - ", "а я тебе - "]
+
 
 def botAnswer(personCity):
-    otst = -1
-    if personCity[-1] == "ь" or personCity[-1] == "ъ":
-        otst = -2
+    indent = -1
+    if personCity[-1] in usedLetters:
+        indent = -2
+    cityPool = list()
     for city in cities:
-        if city not in usedCities:
-            if city[0].lower() == personCity[otst]:
-                usedCities.append(city)
-                return city
-    return "сдаюсь!"
+        if city not in usedCities and city[0].lower() == personCity[indent]:
+            cityPool.append(city)
+    try:
+        usedCity = cityPool[random.randint(0, len(cityPool)-1)]
+        usedCities.append(usedCity)
+        print(cityPool)
+        return [usedCity, len(cityPool)]
+    except:
+        return ["сдаюсь!", 0]
 
-print ('''Сыграем в города?
+print('''Сыграем в города?
         Правила простые - каждый игрок должен сказать название города, которое начинается на последнюю букву города от предыдущего игрока.
         Чтобы прекратить игру введи "я устал, я ухожу".
         Только русские города, патриот ты или как?
 ''')
 
-phrases = ["Ты начинаешь", "Ходи", "Твой ход"]
-falsePhrases = ["Точно без ошибок написано? Не засчитываю", "Не знаю о таком", "Мимо!"]
-usedPhrases = ["Повторяешься!", "Было!"]
 
-cont = True
+continueGame = True
 
-kol = 1
+quantity = 1
 
-while cont:
-    if kol == 1:
-        personCity = input(phrases[0]+"\n").lower()
+while continueGame:
+    if quantity == 1:
+        personCity = (input(startPhrases[random.randint(1, len(startPhrases)-1)] + "\n").strip().title())
     else:
-        personCity = input(phrases[random.randint(1,len(phrases)-1)]+ "\n").lower()
+        personCity = (input(currentPhrases[random.randint(1, len(currentPhrases)-1)] + "\n").strip().title())
 
-    if personCity == "я устал, я ухожу" or personCity == "q":
-        print ("Ну и ладно, больно надо..." if kol <= 10 else "неплохо сыграли, возвращайся еще!")
-        cont = False
+    if not personCity:
+        print ("не нажимай enter всуе")
+        continue
 
-    if personCity.title() in cities and personCity.title() not in usedCities:
+    if personCity.lower() in exitPhrases:
+        print("Ну и ладно, больно надо..." if quantity <= 10 else "неплохо сыграли, возвращайся еще!")
+        continueGame = False
+        continue
+
+    if personCity[0].lower() != currentCity[0][-1] and quantity > 1:
+        print(currentCity[0][-1])
+        print("Название города должно начинаться на \"" + currentCity[0][-1].title() + "\"")
+        continue
+
+    elif personCity.title() in cities and personCity.title() not in usedCities:
         usedCities.append(personCity.title())
         botAns = botAnswer(personCity)
-        if botAns == "сдаюсь!":
-            print ("неплохо играешь!")
-            cont = False
-        print ("окей, мой тебе ответ - " + botAns)
-        kol += 1
+        currentCity = botAns
+        if botAns[1] == 0:
+            print("Ты хорошо играешь =)")
+            continueGame = False
+            continue
+
+        print(botPhrases[random.randint(0,len(botPhrases)-1)] + botAns[0])
+        quantity += 1
+
+        if botAns[1] == 1:
+            addUsedLetter = input("похоже, я больше не знаю городов на букву \"" + personCity[-1] + "\" внести её в список букв, которые не используем как начальные? да/нет")
+            if addUsedLetter in ["да", "д"]:
+                usedLetters.append(personCity[-1])
+
         continue
 
     elif personCity.title() in usedCities:
-        print (usedPhrases[random.randint(0, len(usedPhrases)-1)]+" ")
+        print(usedPhrases[random.randint(0, len(usedPhrases)-1)]+" ")
         continue
     else:
-        print (falsePhrases[random.randint(0, len(falsePhrases)-1)]+" ")
+        print(falsePhrases[random.randint(0, len(falsePhrases)-1)]+" ")
         continue
 
 
 citiesF.close()
 
 # Пофиксить:
-# 1) проверка ввода первой буквы у пользователя
-# 2) говорить, когда город повторяется (done)
+# 1) (done) проверка ввода первой буквы у пользователя
+# 2) (done) говорить, когда город повторяется
 # 3) и если городов на "Ы" больше нет - говорить, что используем предыдущую букву
-# 4) проверять на пустой ввод (показывать спец. сообщение) и strip-пать (убирать пробелы перед и после)
-# 5) назвать переменные чуть осмысленнее и без транслитерации: cont, kol, otst
-# 6) рандномизировать ответы бота
+# 4) (done) проверять на пустой ввод (показывать спец. сообщение) и strip-пать (убирать пробелы перед и после)
+# 5) (done) назвать переменные чуть осмысленнее и без транслитерации: continueGame, quantity, indent
+# 6) (done) рандномизировать ответы бота (выбор городов по первой букве, а не по порядку)
 # 7) впилить его в телеграм-бот
 # 8) сделать возможность выбора категорий слов
 # 9) перевод на английский язык
+# 10)(done) Выходить из цикла сразу после "я устал, я ухожу"
+# 11) Что не так с Йошкар-ола?
+# 12) (done) сделать доп.обработку по унификации городов
 
