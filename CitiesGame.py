@@ -1,7 +1,7 @@
 import random
 from colorama import  Fore, Back, Style
 
-citiesF = open("cities.txt", "r", encoding = "utf8")
+citiesF = open("data/cities.txt", "r", encoding = "utf8")
 cities = list(map(lambda s: s.strip().lower(), citiesF.readlines()))
 
 usedCities = []
@@ -77,7 +77,7 @@ while continueGame:
     if quantity == 1:
         personCity = (input(startPhrases[random.randint(1, len(startPhrases)-1)] + "\n").strip().lower())
     else:
-        personCity = (input(currentPhrases[random.randint(1, len(currentPhrases)-1)] + " думай город на букву \"" + currentCity[0][indent] + "\"\n").strip().lower())
+        personCity = (input(currentPhrases[random.randint(1, len(currentPhrases)-1)] + " думай город на букву \"" + currentCity[0][indent].title() + "\"\n").strip().lower())
 
 
     if not personCity:
