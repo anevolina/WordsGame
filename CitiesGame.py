@@ -26,7 +26,7 @@ def botAnswer(personCity):
         usedCities.append(usedCity)
         cities.remove(usedCity.lower())
         if len(cityPool) == 1:
-            addUsedLetter(usedCity[0], True)
+            usedLetters.append(usedCity[0])
             isUsedLetter = True
         return [usedCity, isUsedLetter]
     except:
@@ -44,9 +44,9 @@ def findAvailableCities(currentCity):
 
     return cityPool
 
-def addUsedLetter(usedLetter, isBot):
-        usedLetters.append(usedLetter)
-        # print("буква \"" + usedLetter + "\" была добавлена в использованные - я больше не знаю городв, начинающихся на эту букву.\n")
+# def addUsedLetter(usedLetter, isBot):
+#         usedLetters.append(usedLetter)
+#         # print("буква \"" + usedLetter + "\" была добавлена в использованные - я больше не знаю городв, начинающихся на эту букву.\n")
 
 
 
@@ -103,7 +103,7 @@ while continueGame:
 
         if len(checkLetter) == 0 and quantity > 1 :
             # print(currentCity)
-            addUsedLetter(currentCity[0][indent], False)
+            usedLetters.append(currentCity[0][indent])
             print("буква \"" + currentCity[0][indent] + "\" была добавлена в неиспользуемые - я больше не знаю городв, начинающихся на эту букву.\n")
         botAns = botAnswer(personCity)
 
