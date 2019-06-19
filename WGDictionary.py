@@ -1,27 +1,29 @@
 import random
+from colorama import  Fore, Back, Style
+import os
 
-class wgDictionary():
+
+class WGDictionary():
 
     usedLetters = []
     dictionary = []
     tempDictionary = []
     usedWords = []
-    currentWord = ""
     alphabet = ""
 
     def __init__(self, path, lang):
         self.path = path
         self.lang = lang
 
-    def makeDictionary(self):
-        FwgDictionary = open(self.path, "r", encoding = "utf8")
-        self.tempDictionary = list(map(lambda s: s.strip().lower(), FwgDictionary.readlines()))
+    def make_dictionary(self):
+        FWGDictionary = open(self.path, "r", encoding = "utf8")
+        self.tempDictionary = list(map(lambda s: s.strip().lower(), FWGDictionary.readlines()))
 
-        self.initLetters()
-        FwgDictionary.close()
+        self.init_letters()
+        FWGDictionary.close()
         return self.dictionary
 
-    def initLetters(self):
+    def init_letters(self):
         if self.lang == "EN":
             self.alphabet = "abcdefghijklmnopqrstuvwxyz"
 
@@ -39,7 +41,7 @@ class wgDictionary():
             if len(self.dictionary[i]) == 0:
                 self.usedLetters.append(self.alphabet[i:i+1])
 
-    def addUsedLetters(self, letter):
+    def add_used_letters(self, letter):
         self.usedLetters.append(letter)
 
         if self.lang == "RU":
@@ -48,16 +50,36 @@ class wgDictionary():
         if self.lang == "EN":
             print("letter " + letter.title() + " was added to used letters. I don't know any word starting from this letter.")
 
-    def checkLetter(self, letter):
+    def check_letter(self, letter):
         index = self.alphabet.find(letter.lower())
         if len(self.dictionary[index]) == 0:
-            self.addUsedLetters(letter)
+            self.add_used_letters(letter)
 
-class languages():
-    startPhrases = []
-    yourTurnPhrases = []
-    falsePhrases = []
+    def return_index_of_letter(self, letter):
+       return self.alphabet.find(letter.lower())
+
+    def bot_answer(self, word):
+        indexOfLetter = self.return_index_of_letter(word[-1])
+        botWord = self.dictionary[indexOfLetter][random.randint(0,len(self.dictionary[indexOfLetter])-1)]
+        self.check_letter(botWord[0])
+        self.usedWords.append(botWord)
+        self.dictionary[indexOfLetter].remove(botWord.lower())
+
+        return botWord
+
+
+
+class Languages():
+    # startPhrases = []
+    # yourTurnPhrases = []
+    # falsePhrases = []
+    # usedPhrases = []
+    # botPhrases = []
     firstinput = ""
+    # # enterPhrase = ""
+    # exitPhrase = ""
+    # gameOverPhrase = ""
+
 
 
 
@@ -70,7 +92,7 @@ class languages():
             self.firstinput = "Select the type of the game - cities/animals\n"
 
 
-    def printDescription(self):
+    def print_description(self):
 
         if self.lang == "RU":
             print('''Правила простые - каждый игрок должен сказать слово, которое начинается на последнюю букву слова предыдущего игрока. 
@@ -82,52 +104,169 @@ The rules are simple. You should type a word, which begins with the last letter 
 Type "Q" to stop the game.
             ''')
 
-    def initStartPhrases(self):
+    def give_start_phrases(self):
         if self.lang == "RU":
-            self.startPhrases = ["Ты начинаешь", "Начинай", "Настарт-внимание-маррррррш!!", "Давай же, поехали!"]
+            startPhrases = ["Ты начинаешь", "Начинай", "Настарт-внимание-маррррррш!!", "Давай же, поехали!"]
 
         elif self.lang == "EN":
-            self.startPhrases = ["Go!", "You start", "Ready - steady - go!"]
+            startPhrases = ["Go!", "You start", "Ready - steady - go!"]
 
-        return(self.startPhrases[random.randint(0,len(self.startPhrases)-1)] + "\n")
+        return(startPhrases[random.randint(0,len(startPhrases)-1)] + "\n")
 
-    def giveYourTurnPhrases(self):
+    def give_your_turn_phrases(self):
         if self.lang == "RU":
-            self.yourTurnPhrases = ["тебя ждем...", "ходи!", "твой ход..."]
+            yourTurnPhrases = ["тебя ждем...", "ходи!", "твой ход..."]
 
         elif self.lang == "EN":
-            self.yourTurnPhrases = ["your turn!", "I'll wait...", "you're up!", "your round", "you're go"]
+            yourTurnPhrases = ["your turn!", "I'll wait...", "you're up!", "your round", "you're go"]
 
-        return(self.startPhrases[random.randint(0,len(self.startPhrases)-1)] + "\n")
+        return(yourTurnPhrases[random.randint(0,len(yourTurnPhrases)-1)] + "\n")
+
+    def give_false_phrases(self):
+        if self.lang == "RU":
+            falsePhrases = ["точно без ошибок написано? Не засчитываю", "не знаю о чем ты", "мимо!"]
+
+        elif self.lang == "EN":
+            falsePhrases = ["are you sure?", "don't know what are you talking about",
+                                 "maybe there is a typo mistake? Doesn't count!",
+                                 "hmmm... doesn't count", "input something else"]
+
+        return (falsePhrases[random.randint(0, len(falsePhrases) - 1)] + "\n")
+
+    def give_used_phrases(self):
+        if self.lang == "RU":
+            usedPhrases = ["повторяешься!", "было!"]
+
+        elif self.lang == "EN":
+            usedPhrases = ["used!", "was used! input something  else!"]
+
+        return (usedPhrases[random.randint(0, len(usedPhrases) - 1)] + "\n")
+
+    def give_bot_phrases(self):
+        if self.lang == "RU":
+            botPhrases = ["окей, мой тебе ответ - ", "а я тебе - "]
+
+        elif self.lang == "EN":
+            botPhrases = ["and my answer is ", "my word is "]
+
+        return (botPhrases[random.randint(0, len(botPhrases) - 1)] + "\n")
+
+    def give_enter_phrases(self):
+        if self.lang == "RU":
+            enterPhrase = "не нажимай Enter всуе!"
+
+        elif self.lang == "EN":
+            enterPhrase = "don't press Enter without a word!"
+
+        return enterPhrase
+
+    def give_exit_phrases(self, quantity):
+        if self.lang == "RU":
+            exitPhrase1 = "Ну и ладно, больно надо..."
+            exitPhrase2 = "неплохо сыграли, возвращайся еще!"
+
+        elif self.lang == "EN":
+            exitPhrase1 = "Well, okay, it hurts..."
+            exitPhrase2 = "nice played! Come back again!"
+
+        return exitPhrase1 if quantity < 10 else exitPhrase2
+
+    def give_game_over_phrases(self):
+        if self.lang == "RU":
+            gameOverPhrase = "прекращаем игру по техническим причинам - я больше не знаю слов, начинающихся на одну из последних двух букв"
+
+        elif self.lang == "EN":
+            gameOverPhrase = "game over according to technical issues - I don't know more words starting from the last two letters"
+
+        return gameOverPhrase
+
+    def give_false_letter_phrases(self, letter):
+        if self.lang == "RU":
+            falseLetterPhrase = "Слолво должно начинаться на букву \"" + letter.title() + "\""
+
+        elif self.lang == "EN":
+            falseLetterPhrase = "Yor word should start with \"" + letter.title() + "\""
+
+        return falseLetterPhrase
+
+
+exitPhrases = ["я устал, я ухожу", "я устал", "отстань", "уйди противный", "отвали", "задолбал", "бесишь", "отвянь",
+               "q", "Q", "quit", "I'm tired", "tired", "fuck off"]
 
 continueGame = True
+currentWord = " "
 quantity = 0
 
 lang = input("Выбери язык/Select the language - RU/EN\n")
-if lang[0] in ['R','r','р','Р']:
-    gameLanguage = languages("RU")
+if lang[0] in ['R', 'r', 'р', 'Р']:
+    gameLanguage = Languages("RU")
 else:
-    gameLanguage = languages("EN")
+    gameLanguage = Languages("EN")
 
 type = input(gameLanguage.firstinput)
 
 if type[0] in ['г', 'Г']:
-    words = wgDictionary("data/citiesRU.txt", "RU")
-elif type[0] in ['ж','Ж']:
-    words = wgDictionary("data/animalsRU.txt", "RU")
-elif type[0] in ['c','C']:
-    words = wgDictionary("data/citiesEN.txt", "EN")
+    words = WGDictionary(os.path.join("data", "citiesRU.txt"), "RU")
+elif type[0] in ['ж', 'Ж']:
+    words = WGDictionary(os.path.join("data", "animalsRU.txt"), "RU")
+elif type[0] in ['c', 'C']:
+    words = WGDictionary(os.path.join("data", "citiesEN.txt"), "EN")
 elif type[0] in ['a', 'A']:
-    words = wgDictionary("data/animalsEN.txt", "EN")
+    words = WGDictionary(os.path.join("data", "animalsEN.txt"), "EN")
 
-words.makeDictionary()
-gameLanguage.printDescription()
+words.make_dictionary()
+gameLanguage.print_description()
 
 while continueGame:
+
     if quantity == 0:
-        personWord = input(gameLanguage.initStartPhrases())
+        personWord = input(gameLanguage.give_start_phrases()).strip()
     else:
-        personWord = input(gameLanguage.giveYourTurnPhrases())
+        personWord = input(gameLanguage.give_your_turn_phrases()).strip()
+
+    if not personWord:
+        print(gameLanguage.give_enter_phrases())
+
+    if personWord in exitPhrases:
+        continueGame = False
+        print(gameLanguage.give_exit_phrases(quantity))
+
+    if personWord[0].lower() != currentWord[-1] and quantity > 0:
+        print(gameLanguage.give_false_letter_phrases(currentWord[-1]))
+        continue
+
+    indexOfLetter = words.return_index_of_letter(personWord[0])
+    if personWord.lower() in words.dictionary[indexOfLetter]:
+        words.usedWords.append(personWord)
+        words.dictionary[indexOfLetter].remove(personWord.lower())
+        words.check_letter(personWord[0])
+        quantity += 1
+        currentWord = words.bot_answer(personWord)
+        print(gameLanguage.give_bot_phrases())
+        print(Fore.RED + currentWord.title())
+        print(Style.RESET_ALL)
+
+    elif personWord.lower() in words.usedWords:
+            print(gameLanguage.give_used_phrases())
+    else:
+        print(gameLanguage.give_false_phrases())
+
+# Осталось исключения проверить на тестовом файле сс городами, и про сдвиг на две буквы не забыть
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
