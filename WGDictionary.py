@@ -76,9 +76,6 @@ class WGDictionary():
             return "GiveUp"
 
 
-
-
-
 class Languages():
 
     firstinput = ""
@@ -275,26 +272,3 @@ while continueGame:
             print(gameLanguage.give_used_phrases())
     else:
         print(gameLanguage.give_false_phrases())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
