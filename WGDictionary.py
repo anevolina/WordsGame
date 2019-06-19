@@ -54,7 +54,7 @@ class WGDictionary():
         index = self.alphabet.find(letter.lower())
 
         if len(self.dictionary[index]) == 0:
-            self.add_used_letters(letter)
+            self.add_used_letters(letter.lower())
 
 
     def return_index_of_letter(self, letter):
@@ -68,7 +68,7 @@ class WGDictionary():
         indexOfLetter = self.return_index_of_letter(word[indent])
         try:
             botWord = self.dictionary[indexOfLetter][random.randint(0, len(self.dictionary[indexOfLetter]) - 1)]
-            self.usedWords.append(botWord)
+            self.usedWords.append(botWord.lower())
             self.dictionary[indexOfLetter].remove(botWord.lower())
             self.check_letter(botWord[0])
             return botWord
@@ -196,7 +196,7 @@ exitPhrases = ["я устал, я ухожу", "я устал", "отстань"
                "q", "Q", "quit", "I'm tired", "tired", "fuck off"]
 
 continueGame = True
-currentWord = " "
+currentWord = "  "
 quantity = 0
 
 lang = input("Выбери язык/Select the language - RU/EN\n")
@@ -223,6 +223,7 @@ gameLanguage.print_description()
 
 while continueGame:
 
+
     if currentWord[-1] in words.usedLetters and currentWord[-2] in words.usedLetters:
         print(gameLanguage.give_game_over_phrases())
         continueGame = False
@@ -241,19 +242,21 @@ while continueGame:
 
     if not personWord:
         print(gameLanguage.give_enter_phrases())
+        continue
 
-    if personWord in exitPhrases:
+    if personWord.lower() in exitPhrases:
         continueGame = False
         print(gameLanguage.give_exit_phrases(quantity))
         continue
 
     if personWord[0].lower() != currentWord[indent] and quantity > 0:
+
         print(gameLanguage.give_false_letter_phrases(currentWord[indent]))
         continue
 
     indexOfLetter = words.return_index_of_letter(personWord[0])
     if personWord.lower() in words.dictionary[indexOfLetter]:
-        words.usedWords.append(personWord)
+        words.usedWords.append(personWord.lower())
         words.dictionary[indexOfLetter].remove(personWord.lower())
         words.check_letter(personWord[0])
         quantity += 1
