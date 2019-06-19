@@ -52,36 +52,36 @@ class WGDictionary():
 
     def check_letter(self, letter):
         index = self.alphabet.find(letter.lower())
+
         if len(self.dictionary[index]) == 0:
             self.add_used_letters(letter)
+
 
     def return_index_of_letter(self, letter):
        return self.alphabet.find(letter.lower())
 
     def bot_answer(self, word):
-        indexOfLetter = self.return_index_of_letter(word[-1])
-        botWord = self.dictionary[indexOfLetter][random.randint(0,len(self.dictionary[indexOfLetter])-1)]
-        self.check_letter(botWord[0])
-        self.usedWords.append(botWord)
-        self.dictionary[indexOfLetter].remove(botWord.lower())
+        if word[-1] in self.usedLetters:
+            indent = -2
+        else:
+            indent = -1
+        indexOfLetter = self.return_index_of_letter(word[indent])
+        try:
+            botWord = self.dictionary[indexOfLetter][random.randint(0, len(self.dictionary[indexOfLetter]) - 1)]
+            self.usedWords.append(botWord)
+            self.dictionary[indexOfLetter].remove(botWord.lower())
+            self.check_letter(botWord[0])
+            return botWord
+        except ValueError:
+            return "GiveUp"
 
-        return botWord
+
 
 
 
 class Languages():
-    # startPhrases = []
-    # yourTurnPhrases = []
-    # falsePhrases = []
-    # usedPhrases = []
-    # botPhrases = []
+
     firstinput = ""
-    # # enterPhrase = ""
-    # exitPhrase = ""
-    # gameOverPhrase = ""
-
-
-
 
     def __init__(self, lang):
         self.lang = lang
@@ -116,11 +116,13 @@ Type "Q" to stop the game.
     def give_your_turn_phrases(self):
         if self.lang == "RU":
             yourTurnPhrases = ["тебя ждем...", "ходи!", "твой ход..."]
+            nextLetterPhrase = " думай слово на букву "
 
         elif self.lang == "EN":
             yourTurnPhrases = ["your turn!", "I'll wait...", "you're up!", "your round", "you're go"]
+            nextLetterPhrase = " type word starting from "
 
-        return(yourTurnPhrases[random.randint(0,len(yourTurnPhrases)-1)] + "\n")
+        return(yourTurnPhrases[random.randint(0,len(yourTurnPhrases)-1)] + nextLetterPhrase)
 
     def give_false_phrases(self):
         if self.lang == "RU":
@@ -182,7 +184,7 @@ Type "Q" to stop the game.
 
     def give_false_letter_phrases(self, letter):
         if self.lang == "RU":
-            falseLetterPhrase = "Слолво должно начинаться на букву \"" + letter.title() + "\""
+            falseLetterPhrase = "Слово должно начинаться на букву \"" + letter.title() + "\""
 
         elif self.lang == "EN":
             falseLetterPhrase = "Yor word should start with \"" + letter.title() + "\""
@@ -213,16 +215,29 @@ elif type[0] in ['c', 'C']:
     words = WGDictionary(os.path.join("data", "citiesEN.txt"), "EN")
 elif type[0] in ['a', 'A']:
     words = WGDictionary(os.path.join("data", "animalsEN.txt"), "EN")
+else:
+    words = WGDictionary(os.path.join("data", "citiesForTest.txt"), "RU")
 
 words.make_dictionary()
 gameLanguage.print_description()
 
 while continueGame:
 
-    if quantity == 0:
-        personWord = input(gameLanguage.give_start_phrases()).strip()
+    if currentWord[-1] in words.usedLetters and currentWord[-2] in words.usedLetters:
+        print(gameLanguage.give_game_over_phrases())
+        continueGame = False
+        continue
+
+    if currentWord[-1] in words.usedLetters:
+        indent = -2
     else:
-        personWord = input(gameLanguage.give_your_turn_phrases()).strip()
+        indent = -1
+
+
+    if quantity == 0:
+        personWord = input(gameLanguage.give_start_phrases() + currentWord[indent].title()+"\n").strip()
+    else:
+        personWord = input(gameLanguage.give_your_turn_phrases()+ currentWord[indent].title()+"\n").strip()
 
     if not personWord:
         print(gameLanguage.give_enter_phrases())
@@ -230,9 +245,10 @@ while continueGame:
     if personWord in exitPhrases:
         continueGame = False
         print(gameLanguage.give_exit_phrases(quantity))
+        continue
 
-    if personWord[0].lower() != currentWord[-1] and quantity > 0:
-        print(gameLanguage.give_false_letter_phrases(currentWord[-1]))
+    if personWord[0].lower() != currentWord[indent] and quantity > 0:
+        print(gameLanguage.give_false_letter_phrases(currentWord[indent]))
         continue
 
     indexOfLetter = words.return_index_of_letter(personWord[0])
@@ -242,6 +258,12 @@ while continueGame:
         words.check_letter(personWord[0])
         quantity += 1
         currentWord = words.bot_answer(personWord)
+
+        if currentWord == "GiveUp":
+            print(gameLanguage.give_game_over_phrases())
+            continueGame = False
+            continue
+
         print(gameLanguage.give_bot_phrases())
         print(Fore.RED + currentWord.title())
         print(Style.RESET_ALL)
@@ -250,10 +272,6 @@ while continueGame:
             print(gameLanguage.give_used_phrases())
     else:
         print(gameLanguage.give_false_phrases())
-
-# Осталось исключения проверить на тестовом файле сс городами, и про сдвиг на две буквы не забыть
-
-
 
 
 
