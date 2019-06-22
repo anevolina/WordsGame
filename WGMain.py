@@ -89,14 +89,13 @@ class Languages():
             self.firstinput = "Select the type of the game - cities/animals\n"
 
 
-    def print_description(self):
+    def give_description(self):
 
         if self.lang == "RU":
-            print('''Правила простые - каждый игрок должен сказать слово, которое начинается на последнюю букву слова предыдущего игрока. 
-Чтобы прекратить игру введи "я устал, я ухожу".''')
+            return('''Правила простые - каждый игрок должен ввести город, название которого начинается на последнюю букву города предыдущего игрока.\nНачинай!''')
 
         elif self.lang == "EN":
-            print('''Let's play!
+            return('''Let's play!
 The rules are simple. You should type a word, which begins with the last letter of the previous word.
 Type "Q" to stop the game.
             ''')
@@ -187,88 +186,88 @@ Type "Q" to stop the game.
             falseLetterPhrase = "Yor word should start with \"" + letter.title() + "\""
 
         return falseLetterPhrase
-
-
-exitPhrases = ["я устал, я ухожу", "я устал", "отстань", "уйди противный", "отвали", "задолбал", "бесишь", "отвянь",
-               "q", "Q", "quit", "I'm tired", "tired", "fuck off"]
-
-continueGame = True
-currentWord = "  "
-quantity = 0
-
-lang = input("Выбери язык/Select the language - RU/EN\n")
-if lang[0] in ['R', 'r', 'р', 'Р']:
-    gameLanguage = Languages("RU")
-else:
-    gameLanguage = Languages("EN")
-
-type = input(gameLanguage.firstinput)
-
-if type[0] in ['г', 'Г']:
-    words = WGDictionary(os.path.join("data", "citiesRU.txt"), "RU")
-elif type[0] in ['ж', 'Ж']:
-    words = WGDictionary(os.path.join("data", "animalsRU.txt"), "RU")
-elif type[0] in ['c', 'C']:
-    words = WGDictionary(os.path.join("data", "citiesEN.txt"), "EN")
-elif type[0] in ['a', 'A']:
-    words = WGDictionary(os.path.join("data", "animalsEN.txt"), "EN")
-else:
-    words = WGDictionary(os.path.join("data", "citiesForTest.txt"), "RU")
-
-words.make_dictionary()
-gameLanguage.print_description()
-
-while continueGame:
-
-
-    if currentWord[-1] in words.usedLetters and currentWord[-2] in words.usedLetters:
-        print(gameLanguage.give_game_over_phrases())
-        continueGame = False
-        continue
-
-    if currentWord[-1] in words.usedLetters:
-        indent = -2
-    else:
-        indent = -1
-
-
-    if quantity == 0:
-        personWord = input(gameLanguage.give_start_phrases() + currentWord[indent].title()+"\n").strip()
-    else:
-        personWord = input(gameLanguage.give_your_turn_phrases()+ currentWord[indent].title()+"\n").strip()
-
-    if not personWord:
-        print(gameLanguage.give_enter_phrases())
-        continue
-
-    if personWord.lower() in exitPhrases:
-        continueGame = False
-        print(gameLanguage.give_exit_phrases(quantity))
-        continue
-
-    if personWord[0].lower() != currentWord[indent] and quantity > 0:
-
-        print(gameLanguage.give_false_letter_phrases(currentWord[indent]))
-        continue
-
-    indexOfLetter = words.return_index_of_letter(personWord[0])
-    if personWord.lower() in words.dictionary[indexOfLetter]:
-        words.usedWords.append(personWord.lower())
-        words.dictionary[indexOfLetter].remove(personWord.lower())
-        words.check_letter(personWord[0])
-        quantity += 1
-        currentWord = words.bot_answer(personWord)
-
-        if currentWord == "GiveUp":
-            print(gameLanguage.give_game_over_phrases())
-            continueGame = False
-            continue
-
-        print(gameLanguage.give_bot_phrases())
-        print(Fore.RED + currentWord.title())
-        print(Style.RESET_ALL)
-
-    elif personWord.lower() in words.usedWords:
-            print(gameLanguage.give_used_phrases())
-    else:
-        print(gameLanguage.give_false_phrases())
+#
+#
+# exitPhrases = ["я устал, я ухожу", "я устал", "отстань", "уйди противный", "отвали", "задолбал", "бесишь", "отвянь",
+#                "q", "Q", "quit", "I'm tired", "tired", "fuck off"]
+#
+# continueGame = True
+# currentWord = "  "
+# quantity = 0
+#
+# lang = input("выбери язык/select the language - ru/en\n")
+# if lang[0] in ['R', 'r', 'р', 'Р']:
+#     gameLanguage = Languages("RU")
+# else:
+#     gameLanguage = Languages("EN")
+#
+# type = input(gameLanguage.firstinput)
+#
+# if type[0] in ['г', 'Г']:
+#     words = WGDictionary(os.path.join("data", "citiesRU.txt"), "RU")
+# elif type[0] in ['ж', 'Ж']:
+#     words = WGDictionary(os.path.join("data", "animalsRU.txt"), "RU")
+# elif type[0] in ['c', 'C']:
+#     words = WGDictionary(os.path.join("data", "citiesEN.txt"), "EN")
+# elif type[0] in ['a', 'A']:
+#     words = WGDictionary(os.path.join("data", "animalsEN.txt"), "EN")
+# else:
+#     words = WGDictionary(os.path.join("data", "citiesForTest.txt"), "RU")
+#
+# words.make_dictionary()
+# print(gameLanguage.give_description())
+#
+# while continueGame:
+#
+#
+#     if currentWord[-1] in words.usedLetters and currentWord[-2] in words.usedLetters:
+#         print(gameLanguage.give_game_over_phrases())
+#         continueGame = False
+#         continue
+#
+#     if currentWord[-1] in words.usedLetters:
+#         indent = -2
+#     else:
+#         indent = -1
+#
+#
+#     if quantity == 0:
+#         personWord = input(gameLanguage.give_start_phrases() + currentWord[indent].title()+"\n").strip()
+#     else:
+#         personWord = input(gameLanguage.give_your_turn_phrases()+ currentWord[indent].title()+"\n").strip()
+#
+#     if not personWord:
+#         print(gameLanguage.give_enter_phrases())
+#         continue
+#
+#     if personWord.lower() in exitPhrases:
+#         continueGame = False
+#         print(gameLanguage.give_exit_phrases(quantity))
+#         continue
+#
+#     if personWord[0].lower() != currentWord[indent] and quantity > 0:
+#
+#         print(gameLanguage.give_false_letter_phrases(currentWord[indent]))
+#         continue
+#
+#     indexOfLetter = words.return_index_of_letter(personWord[0])
+#     if personWord.lower() in words.dictionary[indexOfLetter]:
+#         words.usedWords.append(personWord.lower())
+#         words.dictionary[indexOfLetter].remove(personWord.lower())
+#         words.check_letter(personWord[0])
+#         quantity += 1
+#         currentWord = words.bot_answer(personWord)
+#
+#         if currentWord == "GiveUp":
+#             print(gameLanguage.give_game_over_phrases())
+#             continueGame = False
+#             continue
+#
+#         print(gameLanguage.give_bot_phrases())
+#         print(Fore.RED + currentWord.title())
+#         print(Style.RESET_ALL)
+#
+#     elif personWord.lower() in words.usedWords:
+#             print(gameLanguage.give_used_phrases())
+#     else:
+#         print(gameLanguage.give_false_phrases())
