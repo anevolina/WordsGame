@@ -12,6 +12,7 @@ class WordsGameBot():
         self.additional_info = ''
         self.current_word = ' '
         self.quantity = 0
+        self.user_id = None
 
     def is_game_over(self):
         if self.current_word[-1] in self.words.used_letters and \
@@ -52,8 +53,10 @@ class WordsGameBot():
         if not self.words.is_know_words_on_letter(word[0]):
             self.additional_info += self.phrases.used_letter_was_added(word[0].lower()) + '\n'
         if self.is_game_over():
-            self.additional_info += self.phrases.give_game_over_phrases() + '\n'
+            self.additional_info = self.phrases.give_game_over_phrases() + '\n'
 
+    def restart_bot(self, path, lang='RU'):
+        self.__init__(path, lang)
 
 
     # define bot's answers to the input
@@ -102,7 +105,10 @@ class WordsGameBot():
                 return self.phrases.give_game_over_phrases()
 
             self.check_word_and_letters(self.current_word)
-            return self.additional_info + self.current_word
+            if self.continue_game:
+                return self.additional_info + '\n' + self.current_word
+            else:
+                return self.current_word + '\n\n' + self.additional_info
 
         else:
             return self.phrases.give_false_phrases()
@@ -124,9 +130,11 @@ class WordsGameBot():
             return "GiveUp"
 
 
-my_bot = WordsGameBot('data/citiesForTest.txt')
-
-while my_bot.continue_game:
-    person_word = input('Введи слово\n')
-    bot_answer = my_bot.bot_answer_is(person_word.strip())
-    print(bot_answer)
+# Test class and whole game
+#
+# my_bot = WordsGameBot('data/citiesForTest.txt')
+#
+# while my_bot.continue_game:
+#     person_word = input('Введи слово\n')
+#     bot_answer = my_bot.bot_answer_is(person_word.strip())
+#     print(bot_answer)
