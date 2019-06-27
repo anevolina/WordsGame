@@ -115,9 +115,16 @@ Type "Q" to stop the game.
     def used_letter_was_added(self,letter):
         if self.lang == "RU":
             added_letter_phrase = (
-                "буква " + letter.title() + " была добавлена в использованные. Я больше не знаю слов, начинающихся на эту букву")
+                "буква " + letter.title() + " была добавлена в использованные. Я больше не знаю слов, начинающихся на эту букву.\n")
 
         if self.lang == "EN":
             added_letter_phrase = (
-                "letter " + letter.title() + " was added to used letters. I don't know any word starting from this letter.")
+                "letter " + letter.title() + " was added to used letters. I don't know any word starting from this letter.\n")
         return added_letter_phrase
+
+    def restart_phrases(self):
+        if self.lang == 'RU':
+            restart_phrase = 'Начинаем заново!'
+        if self.lang == 'En':
+            restart_phrase == 'Let\'s start again!'
+        return restart_phrase
