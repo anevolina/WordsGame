@@ -17,13 +17,11 @@ class Phrases():
     def give_description(self):
 
         if self.lang == "RU":
-            return('''Правила простые - каждый игрок должен ввести город, название которого начинается на последнюю букву города предыдущего игрока.\nНачинай!''')
+            return('''Правила простые - каждый игрок должен ввести город, название которого начинается на последнюю букву города предыдущего игрока.\n\nНачинай!''')
 
         elif self.lang == "EN":
-            return('''Let's play!
-The rules are simple. You should type a word, which begins with the last letter of the previous word.
-Type "Q" to stop the game.
-            ''')
+            return('''The rules are simple. You should type a word, which begins with the last letter of the previous word.\n\n\
+            Let's go!''')
 
     def give_start_phrases(self):
         if self.lang == "RU":
@@ -47,7 +45,8 @@ Type "Q" to stop the game.
 
     def give_false_phrases(self):
         if self.lang == "RU":
-            false_phrases = ["точно без ошибок написано? Не засчитываю", "не знаю о чем ты", "мимо!"]
+            false_phrases = ["точно без ошибок написано? Не засчитываю", "не знаю о чем ты", "мимо!", "моя твоя не понимай",
+                             "не знаю о таком"]
 
         elif self.lang == "EN":
             false_phrases = ["are you sure?", "don't know what are you talking about",
@@ -96,10 +95,12 @@ Type "Q" to stop the game.
 
     def give_game_over_phrases(self):
         if self.lang == "RU":
-            game_over_phrase = "прекращаем игру по техническим причинам - я больше не знаю слов, начинающихся на одну из последних двух букв"
+            game_over_phrase = "прекращаем игру по техническим причинам - я больше не знаю слов, " \
+                               "начинающихся на одну из последних двух букв.\n\nНачнем сначала?"
 
         elif self.lang == "EN":
-            game_over_phrase = "game over according to technical issues - I don't know more words starting from the last two letters"
+            game_over_phrase = "game over according to technical issues - I don't know more words " \
+                               "starting from the last two letters\n\nLet's start from the beginning?"
 
         return game_over_phrase
 
