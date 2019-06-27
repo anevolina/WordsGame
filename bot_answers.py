@@ -12,7 +12,6 @@ class WordsGameBot():
         self.additional_info = ''
         self.current_word = ' '
         self.quantity = 0
-        self.user_id = None
 
     def is_game_over(self):
         if self.current_word[-1] in self.words.used_letters and \
@@ -65,11 +64,11 @@ class WordsGameBot():
         # if user wants to stop the game
         if person_word in self.phrases.user_exit_phrases:
             self.continue_game = False
-            return self.phrases.give_exit_phrases(self.quantity)
+            return [self.phrases.give_exit_phrases(self.quantity)]
 
         # if user just pushed enter without typing
         if not person_word:
-            return self.phrases.give_enter_phrases()
+            return [self.phrases.give_enter_phrases()]
 
         # Define an indent for the future checking
         if self.current_word[-1] in self.words.used_letters:
@@ -80,16 +79,16 @@ class WordsGameBot():
         # Check if last two letters was used (no more words started from them are exist in our dictionary)
         # we have to stop the whole game
         if self.is_game_over():
-            return self.phrases.give_game_over_phrases()
+            return [self.phrases.give_game_over_phrases()]
 
 
         # Check if user's word started from correct letter, according to intend
         if not self.is_correct_first_letter(person_word, indent):
-            return self.phrases.give_false_letter_phrases(self.current_word[indent])
+            return [self.phrases.give_false_letter_phrases(self.current_word[indent])]
 
         # Check if user's word already used
         if self.is_person_word_used(person_word):
-            return self.phrases.give_used_phrases()
+            return [self.phrases.give_used_phrases()]
 
 
         # Check if bot knows user's word then return an answer
@@ -102,16 +101,16 @@ class WordsGameBot():
 
             if self.current_word == "GiveUp":
                 self.continue_game = False
-                return self.phrases.give_game_over_phrases()
+                return [self.phrases.give_game_over_phrases()]
 
             self.check_word_and_letters(self.current_word)
             if self.continue_game:
-                return self.additional_info + '\n' + self.current_word
+                return [self.additional_info, self.current_word]
             else:
-                return self.current_word + '\n\n' + self.additional_info
+                return [self.current_word, self.additional_info]
 
         else:
-            return self.phrases.give_false_phrases()
+            return [self.phrases.give_false_phrases()]
 
     def bot_word(self, person_word):
         if person_word[-1] in self.words.used_letters:
