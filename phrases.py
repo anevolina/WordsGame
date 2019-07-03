@@ -8,20 +8,19 @@ class Phrases():
         self.first_input = ""
         # self.theme = theme
         if self.lang == "RU":
-            self.first_input = "Выбери тип игры - города/животные\n"
+            self.first_input = "Выбери тип игры"
             self.user_exit_phrases = ['в', 'й']
         else:
-            self.first_input = "Select the type of the game - cities/animals\n"
+            self.first_input = "Select the type of the game "
             self.user_exit_phrases = ['q']
 
     def give_description(self):
 
         if self.lang == "RU":
-            return('''Правила простые - каждый игрок должен ввести город, название которого начинается на последнюю букву города предыдущего игрока.\n\nНачинай!''')
+            return('''Правила простые - каждый игрок должен ввести слово, которое начинается на последнюю букву слова от предыдущего игрока.\n\nНачинай!''')
 
         elif self.lang == "EN":
-            return('''The rules are simple. You should type a word, which begins with the last letter of the previous word.\n\n\
-            Let's go!''')
+            return('''The rules are simple. You should type a word, which begins with the last letter of the previous word.\n\nLet's go!''')
 
     def give_start_phrases(self):
         if self.lang == "RU":
