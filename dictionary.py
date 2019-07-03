@@ -1,14 +1,15 @@
 
 class WordsGameDictionary():
 
-    def __init__(self, path, lang):
-        self.path = path
+    def __init__(self, lang, theme):
+        self.theme = theme
         self.lang = lang
         self.used_letters = []
         self.alphabet = ''
         self.used_words = []
         self.dictionary = []
 
+        self.path = self.get_path()
         self.make_dictionary()
 
 
@@ -49,3 +50,16 @@ class WordsGameDictionary():
             return False
 
         return True
+
+    # Generate the path and return the default one if it's not exist
+    def get_path(self):
+        path = 'data/' + self.theme + self.lang + '.txt'
+        try:
+            with open(path, 'r', encoding='utf8') as file_dictionary:
+                file_dictionary.read()
+                return 'data/' + self.theme + self.lang + '.txt'
+        except FileNotFoundError:
+            print('check file or filename - I can\'t find it')
+            self.lang = 'RU'
+            return 'data/citiesForTest.txt'
+

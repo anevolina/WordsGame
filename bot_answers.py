@@ -5,14 +5,20 @@ from dictionary import WordsGameDictionary
 
 class WordsGameBot():
 
-    def __init__(self, path, lang='RU'):
+    def __init__(self, lang):
         self.phrases = Phrases(lang)
-        self.words = WordsGameDictionary(path, lang)
+        self.lang = lang
+        self.words = WordsGameDictionary(self.lang, theme='',)
         self.continue_game = True
         self.additional_info = ''
         self.current_word = ' '
         self.quantity = 0
 
+    def init_dictionary(self, theme):
+        self.words = WordsGameDictionary(self.lang, theme)
+
+
+    # game is over when the bot doesn't know any words starting from the last two letters of the previous word
     def is_game_over(self):
         if self.current_word[-1] in self.words.used_letters and \
                 self.current_word[-2] in self.words.used_letters:
@@ -21,11 +27,14 @@ class WordsGameBot():
         else:
             return False
 
+    # check if the first letter of user's word is correct - it should be equal to
+    # the last letter of bot's word
     def is_correct_first_letter(self, person_word, indent):
         if person_word[0].lower() != self.current_word[indent] and self.quantity > 0:
             return False
         return True
 
+    # check if user's word is in current dictionary
     def is_bot_knows_person_word(self, person_word):
         index_of_letter = self.return_index_of_letter(person_word[0].lower())
         if person_word.lower() in self.words.dictionary[index_of_letter]:
@@ -33,6 +42,7 @@ class WordsGameBot():
         else:
             return False
 
+    # check if user's word was used
     def is_person_word_used(self, person_word):
         if person_word.lower() in self.words.used_words:
             return True
@@ -43,20 +53,24 @@ class WordsGameBot():
         index_of_letter = self.words.alphabet.find(letter.lower())
         return index_of_letter
 
+    # Add used word, delete it from the main dictionary
     def add_used_word_del_from_dic(self, word):
         self.words.used_words.append(word.lower())
         index_of_letter = self.return_index_of_letter(word[0])
         self.words.dictionary[index_of_letter].remove(word.lower())
 
+    # check if bot knows words starting from the first letter
+    # and check if the bot knows any words starting from the last two letters of the word - if no - game is over
     def check_word_and_letters(self, word):
         if not self.words.is_know_words_on_letter(word[0]):
             self.additional_info += self.phrases.used_letter_was_added(word[0].lower()) + '\n'
+
         if self.is_game_over():
             self.additional_info = self.phrases.give_game_over_phrases() + '\n'
 
-    def restart_bot(self, path, lang='RU'):
-        self.__init__(path, lang)
-
+    # reinitialize all attributes to reset the bot
+    def restart_bot(self, lang='RU'):
+        self.__init__(lang)
 
     # define bot's answers to the input
     def bot_answer_is(self, person_word):
@@ -67,6 +81,7 @@ class WordsGameBot():
             return [self.phrases.give_exit_phrases(self.quantity)]
 
         # if user just pushed enter without typing
+        # might be redundant in telegram bot implementation
         if not person_word:
             return [self.phrases.give_enter_phrases()]
 
@@ -112,6 +127,7 @@ class WordsGameBot():
         else:
             return [self.phrases.give_false_phrases()]
 
+    # give bot answer
     def bot_word(self, person_word):
         if person_word[-1] in self.words.used_letters:
             indent = -2
@@ -125,6 +141,8 @@ class WordsGameBot():
             self.add_used_word_del_from_dic(bot_word)
 
             return bot_word.title()
+
+        # Might be redundant
         except ValueError:
             return "GiveUp"
 
