@@ -48,7 +48,7 @@ def start_bot(chat_id, lang):
 def start_callback(bot, update):
     reply_markup = InlineKeyboardMarkup(lang_buttons)
     update.message.reply_text("Выбери язык | Choose language", reply_markup=reply_markup)
-    
+
 
 # Define theme using buttons
 def define_bot(bot, update):
