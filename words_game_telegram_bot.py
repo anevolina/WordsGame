@@ -34,7 +34,6 @@ theme_buttons_EN = [[InlineKeyboardButton("Cities", callback_data='cities'),
                     InlineKeyboardButton("Animals", callback_data='animals')]]
 
 
-
 # start or restart bot - define attributes or clean them
 def start_bot(chat_id, lang):
     if chat_id in bot_collection:
