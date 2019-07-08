@@ -1,2 +1,10 @@
 .vscode
 TODO.txt
+.env
+.idea/
+Scripts/
+WGB_env/
+__pycache__/
+my-virtualenv/
+pyvenv.cfg
+tutorial_env/
