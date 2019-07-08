@@ -1,2 +1,13 @@
 .vscode
+.env
+.idea
+__pycache__
+Include
+Lib
+my-virtualenv
+Scripts
+tutorial_env
 TODO.txt
+my-virtualenv
+pyvenv.cfg
+data/TestTelegramBot.py
