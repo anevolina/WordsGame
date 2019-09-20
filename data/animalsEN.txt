@@ -1,23 +1,3 @@
-Canidae
-Felidae
-Cat
-Cattle
-Dog
-Donkey
-Goat
-Guinea pig
-Horse
-Pig
-Rabbit
-Fancy rat varieties
-laboratory rat strains
-Sheep breeds
-Water buffalo breeds
-Chicken breeds
-Duck breeds
-Goose breeds
-Pigeon breeds
-Turkey breeds
 Aardvark
 Aardwolf
 African buffalo
@@ -29,10 +9,11 @@ Alpaca
 American buffalo (bison)
 American robin
 Amphibian
-list
 Anaconda
 Angelfish
 Anglerfish
+Animals by number of neurons
+Animals by size
 Ant
 Anteater
 Antelope
@@ -49,6 +30,7 @@ Ass (donkey)
 Baboon
 Badger
 Bald eagle
+Bali cattle
 Bandicoot
 Barnacle
 Barracuda
@@ -57,17 +39,15 @@ Bass
 Bat
 Beaked whale
 Bear
-list
 Beaver
 Bedbug
 Bee
 Beetle
 Bird
-list
 Bison
-Blackbird
 Black panther
 Black widow spider
+Blackbird
 Blue bird
 Blue jay
 Blue whale
@@ -77,8 +57,8 @@ Bobcat
 Bobolink
 Bonobo
 Booby
-Box jellyfish
 Bovid
+Box jellyfish
 Buffalo, African
 Buffalo, American (bison)
 Bug
@@ -86,33 +66,35 @@ Butterfly
 Buzzard
 Camel
 Canid
+Canidae
 Cape buffalo
 Capybara
 Cardinal
 Caribou
 Carp
 Cat
-list
-Catshark
 Caterpillar
 Catfish
+Catshark
 Cattle
-list
 Centipede
 Cephalopod
 Chameleon
 Cheetah
 Chickadee
 Chicken
-list
+Chicken breeds
 Chimpanzee
 Chinchilla
 Chipmunk
+Cicada
 Clam
 Clownfish
 Cobra
 Cockroach
 Cod
+Common household pests
+Common names of poisonous animals
 Condor
 Constrictor
 Coral
@@ -128,23 +110,33 @@ Cricket
 Crocodile
 Crow
 Cuckoo
-Cicada
 Damselfly
 Deer
 Dingo
 Dinosaur
-list
 Dog
-list
 Dolphin
+Domestic Bactrian camel
+Domestic canary
+Domestic dromedary camel
+Domestic duck
+Domestic goat
+Domestic goose
+Domestic guineafowl
+Domestic hedgehog
+Domestic pig
+Domestic pigeon
+Domestic rabbit
+Domestic silkmoth
+Domestic silver fox
+Domestic turkey
 Donkey
-list
 Dormouse
 Dove
-Dragonfly
 Dragon
+Dragonfly
 Duck
-list
+Duck breeds
 Dung beetle
 Eagle
 Earthworm
@@ -159,6 +151,10 @@ Emu
 English pointer
 Ermine
 Falcon
+Fancy mouse
+Fancy rat
+Fancy rat varieties
+Felidae
 Ferret
 Finch
 Firefly
@@ -171,10 +167,9 @@ Fowl
 Fox
 Frog
 Fruit bat
-Gamefowl
-list
 Galliform
-list
+Gamefowl
+Gayal
 Gazelle
 Gecko
 Gerbil
@@ -184,10 +179,9 @@ Gibbon
 Gila monster
 Giraffe
 Goat
-list
 Goldfish
 Goose
-list
+Goose breeds
 Gopher
 Gorilla
 Grasshopper
@@ -198,12 +192,9 @@ Ground shark
 Ground sloth
 Grouse
 Guan
-list
 Guanaco
-Guineafowl
-list
 Guinea pig
-list
+Guineafowl
 Gull
 Guppy
 Haddock
@@ -221,7 +212,6 @@ Hippopotamus
 Hookworm
 Hornet
 Horse
-list
 Hoverfly
 Hummingbird
 Humpback whale
@@ -244,10 +234,12 @@ Koala
 Koi
 Komodo dragon
 Krill
+Lab rat
+laboratory rat strains
 Ladybug
 Lamprey
-Landfowl
 Land snail
+Landfowl
 Lark
 Leech
 Lemming
@@ -296,8 +288,8 @@ Mouse
 Mule
 Muskox
 Narwhal
-Newt
 New World quail
+Newt
 Nightingale
 Ocelot
 Octopus
@@ -325,7 +317,7 @@ Peregrine falcon
 Pheasant
 Pig
 Pigeon
-list
+Pigeon breeds
 Pike
 Pilot whale
 Pinniped
@@ -350,7 +342,6 @@ Quail
 Quelea
 Quokka
 Rabbit
-list
 Raccoon
 Rainbow trout
 Rat
@@ -363,6 +354,7 @@ Reindeer
 Reptile
 Rhinoceros
 Right whale
+Ringneck dove
 Roadrunner
 Rodent
 Rook
@@ -376,16 +368,16 @@ Sawfish
 Scale insect
 Scallop
 Scorpion
-Seahorse
 Sea lion
 Sea slug
 Sea snail
+Seahorse
 Shark
-list
 Sheep
-list
+Sheep breeds
 Shrew
 Shrimp
+Siamese fighting fish
 Silkworm
 Silverfish
 Skink
@@ -395,9 +387,9 @@ Slug
 Smelt
 Snail
 Snake
-list
 Snipe
 Snow leopard
+Society finch
 Sockeye salmon
 Sole
 Sparrow
@@ -407,8 +399,8 @@ Spider monkey
 Spoonbill
 Squid
 Squirrel
-Starfish
 Star-nosed mole
+Starfish
 Steelhead trout
 Stingray
 Stoat
@@ -441,7 +433,7 @@ Tree frog
 Trout
 Tuna
 Turkey
-list
+Turkey breeds
 Turtle
 Tyrannosaurus
 Urial
@@ -453,10 +445,11 @@ Vole
 Vulture
 Wallaby
 Walrus
-Wasp
 Warbler
+Wasp
 Water Boa
 Water buffalo
+Water buffalo breeds
 Weasel
 Whale
 Whippet
@@ -471,51 +464,9 @@ Wombat
 Woodpecker
 Worm
 Wren
-Xerinae
 X-ray fish
+Xerinae
 Yak
 Yellow perch
 Zebra
 Zebra finch
-Animals by number of neurons
-Animals by size
-Common household pests
-Common names of poisonous animals
-Alpaca
-Bali cattle
-Cat
-Cattle
-Chicken
-Dog
-Domestic Bactrian camel
-Domestic canary
-Domestic dromedary camel
-Domestic duck
-Domestic goat
-Domestic goose
-Domestic guineafowl
-Domestic hedgehog
-Domestic pig
-Domestic pigeon
-Domestic rabbit
-Domestic silkmoth
-Domestic silver fox
-Domestic turkey
-Donkey
-Fancy mouse
-Fancy rat
-Lab rat
-Ferret
-Gayal
-Goldfish
-Guinea pig
-Guppy
-Horse
-Koi
-Llama
-Ringneck dove
-Sheep
-Siamese fighting fish
-Society finch
-Yak
-Water buffalo
